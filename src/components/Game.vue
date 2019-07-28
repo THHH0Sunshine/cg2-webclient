@@ -210,6 +210,11 @@ export default {
     handleMessage(json) {
       switch(json.message)
       {
+      case 'ASKFORDISCOVER':
+        this.discoverMode=2
+        this.discover=json.data.choices
+        this.discoverVisible=true
+        break
       case 'ASKFORFIRST':
         this.discoverMode=3
         this.discover=this.hand
@@ -361,8 +366,15 @@ export default {
     discovered(e) {
       this.discoverVisible=false
       if(this.state!=3)return
-      if(this.discoverMode==3)
+      switch(this.discoverMode)
       {
+      case 2:
+        var ab=new ArrayBuffer(1)
+        var dv=new DataView(ab)
+        dv.setInt8(0,e.data)
+        this.socket.send(dv)
+        break
+      case 3:
         var ab=new ArrayBuffer(2)
         var dv=new DataView(ab)
         dv.setInt8(0,2)
@@ -370,6 +382,7 @@ export default {
         for(var n=0;n<e.length;n++)if(e.data[n])i|=(1<<n)
         dv.setInt8(1,i)
         this.socket.send(dv)
+        break
       }
     },
     endturn() {
