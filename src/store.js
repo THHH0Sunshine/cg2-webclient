@@ -58,8 +58,7 @@ export default new Vuex.Store({
         ch.armor=0
       }
     },
-    deckdec: (s,who) => s.table[who].decklen--,
-    deckinc: (s,who) => s.table[who].decklen++,
+    deckadd: (s,p) => s.table[p.who].decklen+=p.num,
     decklen: (s,p) => s.table[p.who].decklen=p.num,
     downat: (s,index) => s.downpos=index,
     draw(s,card) {

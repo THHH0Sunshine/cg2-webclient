@@ -93,8 +93,7 @@ export default {
       'clearTable',
       'coinadd',
       'damage',
-      'deckdec',
-      'deckinc',
+      'deckadd',
       'downat',
       'draw',
       'handdec',
@@ -221,7 +220,8 @@ export default {
         this.discoverVisible=true
         break
       case 'BURN':
-        this.deckdec(json.data.who)
+        json.data.num=-1
+        this.deckadd(json.data)
         break
       case 'CANPLAY':
         this.refreshGreen(json.data)
@@ -299,7 +299,8 @@ export default {
         this.sit(json.data)
         break
       case 'SHUFFLE':
-        this.deckinc(json.data.who)
+        json.data.num=1
+        this.deckadd(json.data)
         break
       case 'SPENDCOINS':
         json.data.num=-json.data.num
@@ -312,7 +313,8 @@ export default {
         this.addMinion(json.data)
         break
       case 'THROWDECK':
-        this.deckdec(json.data.who)
+        json.data.num=-json.data.num
+        this.deckadd(json.data)
         break
       case 'THROWHAND':
         if(json.data.who==this.self)this.removeHand(json.data.index)
