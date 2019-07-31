@@ -114,6 +114,8 @@ export default {
       setCoins: 'coins',
       setDecklen: 'decklen',
       setHero: 'hero',
+      setWeapon: 'weapon',
+      setSkill: 'skill',
       setProp: 'prop',
       setShield: 'shield',
       setCurrent: 'turn',
@@ -236,6 +238,9 @@ export default {
       case 'CHANGEPP':
         this.setProp(json.data)
         break
+      case 'CHANGESKILL':
+        this.setSkill(json.data)
+        break
       case 'CHECKCOINS':
         this.setCoins(json.data)
         break
@@ -245,11 +250,17 @@ export default {
       case 'CHECKHERO':
         this.setHero(json.data)
         break
+      case 'CHECKSKILL':
+        this.setSkill(json.data)
+        break
       case 'DAMAGE':
         this.damage(json.data)
         break
       case 'DRAW':
         this.draw(json.data.card)
+        break
+      case 'EQUIP':
+        this.setWeapon(json.data)
         break
       case 'FILLCOINS':
         this.coinadd(json.data)
@@ -320,6 +331,10 @@ export default {
         if(json.data.who==this.self)this.removeHand(json.data.index)
         else this.handdec(json.data.who)
         break
+      case 'THROWWEAPON':
+        json.data.card=null
+        this.setWeapon(json.data)
+        break
       case 'TURN':
         this.setCurrent(json.data.who)
         break
@@ -341,14 +356,26 @@ export default {
         var ab,dv
         if(this.selected.pIndex<0)
         {
-          ab=new ArrayBuffer(6)
-          dv=new DataView(ab)
-          dv.setInt8(0,5)
-          dv.setInt8(1,this.selected.mIndex)
-          dv.setInt8(2,this.downpos<0?0:this.downpos)
-          dv.setInt8(3,this.choice)
-          dv.setInt8(4,e==null?-1:e.pIndex)
-          dv.setInt8(5,e==null?-1:e.mIndex)
+          if(this.selected.mIndex<0)
+          {
+            ab=new ArrayBuffer(4)
+            dv=new DataView(ab)
+            dv.setInt8(0,6)
+            dv.setInt8(1,this.choice)
+            dv.setInt8(2,e==null?-1:e.pIndex)
+            dv.setInt8(3,e==null?-1:e.mIndex)
+          }
+          else
+          {
+            ab=new ArrayBuffer(6)
+            dv=new DataView(ab)
+            dv.setInt8(0,5)
+            dv.setInt8(1,this.selected.mIndex)
+            dv.setInt8(2,this.downpos<0?0:this.downpos)
+            dv.setInt8(3,this.choice)
+            dv.setInt8(4,e==null?-1:e.pIndex)
+            dv.setInt8(5,e==null?-1:e.mIndex)
+          }
         }
         else
         {

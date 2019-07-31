@@ -37,7 +37,7 @@ export default {
       if(this.selected==null)return false
       if(this.selected.pIndex<0)
       {
-        var h=this.hand[this.selected.mIndex]
+        var h=this.selected.mIndex<0?this.players[this.self].skill:this.hand[this.selected.mIndex]
         if(this.choice<0||h.type=='MINION'&&this.downpos<0||h.greens==null)return false
         var gr=h.greens[this.choice]
         for(var p in gr)if(gr[p]!=null&&gr[p].pIndex==this.pIndex&&gr[p].mIndex==this.mIndex)return true

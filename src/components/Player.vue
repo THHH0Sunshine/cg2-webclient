@@ -2,10 +2,24 @@
   <div>
     <div class="heroinfo">
       <Character
+      class="weapon"
+      v-if="weapon"
+      :pIndex="-2"
+      :mIndex="-2"
+      :card="weapon"
+      />
+      <Character
       class="hero"
       :pIndex="pIndex"
       :mIndex="-1"
       :card="hero"
+      @move="$emit('move',$event)"
+      />
+      <Card
+      class="skill"
+      v-if="skill"
+      :index="skillind"
+      :card="skill"
       @move="$emit('move',$event)"
       />
       <div>
@@ -30,18 +44,22 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import Character from '@/components/Character.vue'
+import Card from '@/components/Card.vue'
 
 export default {
   name: 'player',
   components: {
-    Character
+    Character,
+    Card
   },
   props: {
     pIndex: Number,
     player: Object,
   },
   computed: {
+    ...mapGetters(['self']),
     coins() {
       return this.player.coins
     },
@@ -56,6 +74,15 @@ export default {
     },
     minions() {
       return this.player.minions
+    },
+    weapon() {
+      return this.player.weapon
+    },
+    skill() {
+      return this.player.skill
+    },
+    skillind() {
+      return this.pIndex==this.self?-1:-2
     }
   }
 }

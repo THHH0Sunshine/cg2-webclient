@@ -4,7 +4,7 @@
       <Card
       class="discover-card"
       v-for="(v,k) in cards"
-      :index="-1"
+      :index="-2"
       :card="v"
       :key="k"
       :class="{'discover-selected':chosen[k]}"

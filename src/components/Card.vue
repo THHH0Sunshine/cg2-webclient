@@ -43,7 +43,7 @@ export default {
   methods: {
     ...mapMutations(['choose','downat','select']),
     clickme() {
-      if(this.index<0)return
+      if(this.index<-1)return
       if(this.selected==null)
       {
         if(this.green)

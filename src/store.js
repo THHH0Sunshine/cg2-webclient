@@ -70,8 +70,17 @@ export default new Vuex.Store({
     handinc: (s,who) => s.table[who].handlen++,
     heal: (s,p) => s.chars[p.tohash].hp+=p.num,
     hero(s,p) {
+      if(s.table[p.who].hero)Vue.delete(s.chars,s.table[p.who].hero.hash)
       Vue.set(s.chars,p.card.hash,p.card)
       s.table[p.who].hero=p.card
+    },
+    weapon(s,p) {
+      if(p.card)Vue.set(s.chars,p.card.hash,p.card)
+      else if(s.table[p.who].weapon)Vue.delete(s.chars,s.table[p.who].weapon.hash)
+      s.table[p.who].weapon=p.card
+    },
+    skill(s,p) {
+      s.table[p.who].skill=p.card
     },
     maxcoinadd(s,p) {
       var pl=s.table[p.who]
@@ -96,6 +105,7 @@ export default new Vuex.Store({
         Vue.set(ch,'green',minionc.green)
       }
       for(var i in cans.handcan)Vue.set(s.hand[i],'greens',cans.handcan[i])
+      if(s.table[s.self].skill)Vue.set(s.table[s.self].skill,'greens',cans.skillcan)
     },
     removeBuff: (s,p) => s.chars[p.hash].buff.splice(p.index,1),
     removeHand(s,index) {
@@ -116,6 +126,8 @@ export default new Vuex.Store({
         decklen:0,
         handlen:0,
         hero:null,
+        weapon:null,
+        skill:null,
         minions:[]
       })
     },
