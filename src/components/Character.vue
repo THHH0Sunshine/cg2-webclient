@@ -67,7 +67,7 @@ export default {
       }
       else
       {
-        if(this.downpos<0&&this.selected.pIndex<0&&this.hand[this.selected.mIndex].type=='MINION')
+        if(this.downpos<0&&this.selected.pIndex<0&&this.selected.mIndex>=0&&this.hand[this.selected.mIndex].type=='MINION')
         {
           if(this.self!=this.pIndex)
           {
