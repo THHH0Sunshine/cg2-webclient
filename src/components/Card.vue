@@ -51,12 +51,12 @@ export default {
           this.select({pIndex:-1,mIndex:this.index})
           if(this.card.type!='MINION')
           {
-            if(this.card.choices<=1)
+            if(this.card.greens.length<=1)
             {
               this.choose(0)
               if(this.card.greens[this.choice].includes(null))this.$emit('move',null)
             }
-            //else open discover
+            else this.$emit('chooseone',{card:this.card,choices:this.card.greens.length})
           }
         }
       }

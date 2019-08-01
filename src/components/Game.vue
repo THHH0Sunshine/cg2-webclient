@@ -32,6 +32,7 @@
         :pIndex="self"
         :player="players[self]"
         @move="move"
+        @chooseone="chooseone"
         />
         <button class="endturn" :disabled="!canPlay" @click="endturn">END TURN</button>
       </div>
@@ -43,6 +44,7 @@
         :index="k"
         :card="v"
         @move="move"
+        @chooseone="chooseone"
         />
       </div>
       <Discover v-if="discoverVisible" :cards="discover" :mode="discoverMode" @discover="discovered"/>
@@ -340,6 +342,13 @@ export default {
         break
       }
     },
+    chooseone(e) {
+      this.discoverMode=1
+      var list=[]
+      for(i=0;i<e.choices;i++)list.push({name:e.card.name+'$'+i,cost:0,atk:0,hp:0,canplay:false,type:'NONE'})
+      this.discover=e
+      this.discoverVisible=true
+    },
     concede() {
       this.setCanPlay(false)
       if(this.state==3)
@@ -397,6 +406,19 @@ export default {
       if(this.state!=3)return
       switch(this.discoverMode)
       {
+      case 1:
+        if(e.data<0)
+        {
+          this.select(null)
+          this.downat(-1)
+        }
+        else
+        {
+          this.choose(e.data)
+          var h=this.selected.mIndex<0?this.players[this.self].skill:this.hand[this.selected.mIndex]
+          if(h.greens[e.data].includes(null))this.move(null)
+        }
+        break
       case 2:
         var ab=new ArrayBuffer(1)
         var dv=new DataView(ab)

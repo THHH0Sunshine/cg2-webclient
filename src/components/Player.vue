@@ -14,6 +14,7 @@
       :mIndex="-1"
       :card="hero"
       @move="$emit('move',$event)"
+      @chooseone="$emit('chooseone',$event)"
       />
       <Card
       class="skill"
@@ -21,6 +22,7 @@
       :index="skillind"
       :card="skill"
       @move="$emit('move',$event)"
+      @chooseone="$emit('chooseone',$event)"
       />
       <div>
         <div>INFO</div>
@@ -38,6 +40,7 @@
       :card="v"
       :key="k"
       @move="$emit('move',$event)"
+      @chooseone="$emit('chooseone',$event)"
       />
     </div>
   </div>

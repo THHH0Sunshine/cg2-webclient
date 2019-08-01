@@ -79,11 +79,12 @@ export default {
           {
             this.downat(this.mIndex<0?this.players[this.pIndex].minions.length:this.mIndex)
             var hc=this.hand[this.selected.mIndex]
-            if(hc.choices<=1)
+            if(hc.greens.length<=1)
             {
               this.choose(0)
               if(hc.greens[this.choice].includes(null))this.$emit('move',null)
             }
+            else this.$emit('chooseone',{card:hc,choices:hc.greens.length})
           }
         }
         else if(!this.red)
