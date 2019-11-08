@@ -133,7 +133,9 @@ export default {
     connect() {
       if(this.state!=-1)return
       this.changeState(-2)
-      this.socket=new WebSocket('ws://'+location.host+'/websocket/')
+      var host = location.host
+      if(!host)host='localhost:7788' //for file://...
+      this.socket=new WebSocket('ws://'+host+'/websocket/')
       this.socket.binaryType='arraybuffer'
       this.socket.onopen=this.opened
       this.socket.onmessage=this.received
