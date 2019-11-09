@@ -15,6 +15,7 @@ export default new Vuex.Store({
     choice: -1,
     downpos: -1,
     state: -1,//-2:connecting,-1:offline,0:hall,1:joining,2:room,3:started,4:starting
+    searchObj: {},
   },
   getters: {
     canPlay: s => s.canPlay,
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     choice: s => s.choice,
     downpos: s => s.downpos,
     state: s => s.state,
+    searchObj: s => s.searchObj,
   },
   mutations: {
     addBuff: (s,p) => s.chars[p.hash].buff.push(p.buff),
@@ -134,5 +136,6 @@ export default new Vuex.Store({
     turn: (s,who) => s.turn=who,
     select: (s,pos) => s.selected=pos,
     changeState: (s,st) => s.state=st,
+    searchObj: (s,o) => s.searchObj = o,
   }
 })

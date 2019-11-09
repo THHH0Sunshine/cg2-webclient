@@ -57,6 +57,7 @@ import {mapGetters,mapMutations} from 'vuex'
 import Player from '@/components/Player.vue'
 import Card from '@/components/Card.vue'
 import Discover from '@/components/Discover.vue'
+import { getSearchObj } from '@/js/util.js'
 
 export default {
   name: 'game',
@@ -83,6 +84,7 @@ export default {
     'choice',
     'downpos',
     'state',
+    'searchObj',
   ]),
   methods: {
     ...mapMutations([
@@ -121,6 +123,7 @@ export default {
       setProp: 'prop',
       setShield: 'shield',
       setCurrent: 'turn',
+      setSearchObj: 'searchObj',
     }),
     joinRoom() {
       if(this.state!=0)return
@@ -134,7 +137,8 @@ export default {
       if(this.state!=-1)return
       this.changeState(-2)
       var host = location.host
-      if(!host)host='localhost:7788' //for file://...
+      if(!host)host=this.searchObj.wshost //for file://what?wshost=what
+      if(!host)host='localhost:7788' //for file://what
       this.socket=new WebSocket('ws://'+host+'/websocket/')
       this.socket.binaryType='arraybuffer'
       this.socket.onopen=this.opened
@@ -454,6 +458,7 @@ export default {
     }
   },
   mounted() {
+    this.setSearchObj(getSearchObj())
     this.connect()
   }
 }
