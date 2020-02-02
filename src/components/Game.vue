@@ -428,7 +428,8 @@ export default {
       case 2:
         var ab=new ArrayBuffer(1)
         var dv=new DataView(ab)
-        dv.setInt8(0,e.data)
+        dv.setInt8(0,2)
+        dv.setInt8(1,e.data)
         this.socket.send(dv)
         break
       case 3:
