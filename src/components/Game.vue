@@ -426,7 +426,7 @@ export default {
         }
         break
       case 2:
-        var ab=new ArrayBuffer(1)
+        var ab=new ArrayBuffer(2)
         var dv=new DataView(ab)
         dv.setInt8(0,2)
         dv.setInt8(1,e.data)
